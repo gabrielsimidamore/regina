@@ -86,18 +86,26 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="stats-strip reveal">
-            {[
-              { n: '4+', l: 'Anos no varejo alimentício' },
-              { n: '10+', l: 'Redes & atacados atendidos' },
-              { n: '3+', l: 'Marcas líderes representadas' },
-              { n: '∞', l: 'Clientes atendidos no PDV' },
-            ].map(({ n, l }) => (
-              <div key={l} className="stat">
-                <div className="n">{n}</div>
-                <div className="l">{l}</div>
-              </div>
-            ))}
+          <div className="choco-bar reveal">
+            <div className="choco-label">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              Regina Moura · Portfólio Profissional
+            </div>
+            <div className="choco-grid">
+              {[
+                { n: '4', unit: 'anos', l: 'de experiência no PDV' },
+                { n: '∞', unit: '', l: 'clientes satisfeitos' },
+                { n: '30+', unit: 'lojas', l: 'atendidas no Brasil' },
+                { n: '3+', unit: 'marcas', l: 'líderes representadas' },
+              ].map(({ n, unit, l }) => (
+                <div key={l} className="choco-piece">
+                  <div className="choco-shine" />
+                  <div className="choco-num">{n}</div>
+                  {unit && <div className="choco-unit">{unit}</div>}
+                  <div className="choco-lbl">{l}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
