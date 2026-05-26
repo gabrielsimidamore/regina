@@ -27,20 +27,19 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Regina Moura — Demonstradora & Impulsionadora",
   description:
-    "Demonstradora e Impulsionadora de Vendas com 4+ anos de experiência nas principais redes do Brasil. Degustação, atendimento e ativação de marca com calor humano e foco em resultado.",
+    "Demonstradora e Impulsionadora de Vendas com 4+ anos de experiência nas principais redes do Brasil.",
   openGraph: {
     title: "Regina Moura — Demonstradora & Impulsionadora",
-    description:
-      "Portfólio profissional de Regina Moura, Demonstradora & Impulsionadora de Vendas em Osasco, SP.",
+    description: "Portfólio profissional de Regina Moura, Demonstradora & Impulsionadora de Vendas em Osasco, SP.",
     type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
     <html lang="pt-BR" className={`${playfair.variable} ${manrope.variable} ${jetbrains.variable}`}>
       <body>{children}</body>
