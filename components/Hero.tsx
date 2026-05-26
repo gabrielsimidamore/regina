@@ -91,6 +91,21 @@ export default function Hero() {
         </div>
       </section>
 
+      {/* ── Stats azuis ── */}
+      <div className="blue-stats reveal">
+        {[
+          { n: '4+',  l: 'Anos de experiência' },
+          { n: '∞',   l: 'Clientes satisfeitos' },
+          { n: '30+', l: 'Lojas atendidas' },
+          { n: '3+',  l: 'Marcas representadas' },
+        ].map(({ n, l }) => (
+          <div key={l} className="blue-stat">
+            <div className="bs-num">{n}</div>
+            <div className="bs-lbl">{l}</div>
+          </div>
+        ))}
+      </div>
+
       <div className="wave-divider" aria-hidden="true">
         <svg viewBox="0 0 1440 140" preserveAspectRatio="none">
           <path d="M0,0 L1440,0 L1440,60 C1200,140 960,140 720,80 C480,20 240,20 0,80 Z" fill="#000F90" />
