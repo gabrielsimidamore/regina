@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 
 export default function ScrollProgress() {
   useEffect(() => {
+    // Scroll progress bar + back to top
     const bar = document.getElementById('scroll-progress');
     const backTop = document.getElementById('back-top');
     const handleScroll = () => {
@@ -13,7 +14,23 @@ export default function ScrollProgress() {
       if (backTop) backTop.classList.toggle('show', window.scrollY > 500);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Reveal on scroll via IntersectionObserver
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => obs.observe(el));
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      obs.disconnect();
+    };
   }, []);
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
