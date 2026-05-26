@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import ChocoBar from './ChocoBar';
+
 
 export default function Hero() {
   return (
@@ -87,7 +87,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <ChocoBar />
+
         </div>
       </section>
 
