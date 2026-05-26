@@ -236,138 +236,287 @@ section { padding: 120px 32px; position: relative; }
   .hero-lede::before { margin-left: auto; margin-right: auto; }
 }
 
-/* ===== Chocolate Bar Stats ===== */
-.choco-bar {
-  margin-top: 48px;
-  border-radius: 20px 20px 0 0;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 -3px 0 rgba(255,200,100,.12) inset, 0 30px 60px -20px rgba(61,26,14,.5);
+/* ===== Responsive hero ===== */
+@media (max-width: 980px) {
+  .hero-comp { grid-template-columns: 1fr; gap: 40px; }
+  .hero-left, .hero-right { align-items: center; text-align: center; padding: 0; }
+  .hero-left .cta-row, .hero-right { justify-content: center; }
+  .hero-lede { margin-left: auto; margin-right: auto; }
+  .hero-lede::before { margin-left: auto; margin-right: auto; }
 }
-.choco-label {
-  background: #1E0B03;
-  color: rgba(255,210,130,.6);
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: .28em;
-  text-transform: uppercase;
-  padding: 9px 28px;
+
+/* ====================================================
+   BARRA DE CHOCOLATE
+   ==================================================== */
+.choco-wrapper {
+  position: relative;
+  margin-top: 48px;
+}
+
+/* ── Bar shell ── */
+.choco-bar {
+  position: relative;
+  border-radius: 18px 18px 0 0;
+  background:
+    /* per-square highlight grid */
+    repeating-linear-gradient(90deg, transparent, transparent calc(25% - 2px), rgba(0,0,0,.28) calc(25% - 2px), rgba(0,0,0,.28) 25%),
+    /* surface gradient */
+    linear-gradient(175deg, #6B3017 0%, #4A1D0A 30%, #3A1407 60%, #2E0F05 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    inset 0 -1px 0 rgba(0,0,0,.3),
+    0 24px 60px -18px rgba(40,12,4,.55);
+  overflow: visible;
+}
+
+/* ── Foil label ── */
+.choco-foil {
+  background: linear-gradient(90deg, #1A0802 0%, #2C0F06 40%, #1A0802 100%);
+  border-radius: 18px 18px 0 0;
+  padding: 10px 28px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid rgba(0,0,0,.3);
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(0,0,0,.4);
+  position: relative;
+  overflow: hidden;
 }
+.choco-foil::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0px, transparent 4px,
+    rgba(255,255,255,.02) 4px, rgba(255,255,255,.02) 5px
+  );
+}
+.foil-brand {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 15px;
+  color: rgba(255,210,130,.9);
+  letter-spacing: .04em;
+  position: relative;
+}
+.foil-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,210,130,.45);
+  position: relative;
+}
+
+/* ── Horizontal score lines across entire bar ── */
+.choco-bar::before {
+  content: '';
+  position: absolute;
+  top: 54px; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,.35) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+.choco-bar::after {
+  content: '';
+  position: absolute;
+  bottom: 16px; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.15) 50%, rgba(0,0,0,.35) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Grid ── */
 .choco-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  background: #3E1A0C;
   position: relative;
 }
-/* horizontal score line top */
-.choco-grid::before {
-  content: '';
-  position: absolute;
-  top: 16px; left: 0; right: 0; height: 1px;
-  background: rgba(0,0,0,.2);
-  pointer-events: none;
-  z-index: 1;
-}
-/* horizontal score line bottom */
-.choco-grid::after {
-  content: '';
-  position: absolute;
-  bottom: 16px; left: 0; right: 0; height: 1px;
-  background: rgba(0,0,0,.2);
-  pointer-events: none;
-  z-index: 1;
-}
+
+/* ── Each chocolate square/piece ── */
 .choco-piece {
   position: relative;
-  padding: 36px 22px 38px;
+  padding: 36px 20px 40px;
   text-align: center;
-  border-right: 3px solid #2A1208;
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.055) 0%,
-    rgba(255,255,255,.02) 35%,
-    transparent 65%,
-    rgba(0,0,0,.18) 100%
-  );
-  transition: background .3s;
+  border-right: 2px solid rgba(0,0,0,.4);
   overflow: hidden;
+  transition: filter .3s;
 }
 .choco-piece:last-child { border-right: none; }
-.choco-piece:hover {
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,.10) 0%,
-    rgba(255,255,255,.04) 35%,
-    transparent 65%,
-    rgba(0,0,0,.12) 100%
-  );
-}
-/* vertical score notch top */
+.choco-piece:hover { filter: brightness(1.15); }
+
+/* Score notch marks (top + bottom of each square) */
 .choco-piece::before {
   content: '';
   position: absolute;
-  top: 0; left: 50%;
-  width: 3px; height: 16px;
-  background: #2A1208;
+  top: 0; left: 50%; width: 2px; height: 14px;
+  background: rgba(0,0,0,.4);
   transform: translateX(-50%);
 }
-/* vertical score notch bottom */
 .choco-piece::after {
   content: '';
   position: absolute;
-  bottom: 0; left: 50%;
-  width: 3px; height: 16px;
-  background: #2A1208;
+  bottom: 0; left: 50%; width: 2px; height: 14px;
+  background: rgba(0,0,0,.4);
   transform: translateX(-50%);
 }
-.choco-shine {
+
+/* Glossy highlight per square */
+.sq-shine {
   position: absolute;
-  top: 16px; left: 8%; right: 8%; height: 44%;
-  background: linear-gradient(180deg, rgba(255,255,255,.055), transparent);
+  top: 14px; left: 10%; right: 10%; height: 46%;
+  background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.10) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
+
+/* Stats content */
 .choco-num {
   font-family: var(--sans);
-  font-weight: 800;
-  font-size: clamp(36px, 4.2vw, 56px);
+  font-weight: 900;
+  font-size: clamp(38px, 4.5vw, 60px);
   line-height: 1;
   letter-spacing: -.03em;
   color: #FFD580;
-  text-shadow: 0 2px 10px rgba(0,0,0,.5), 0 0 30px rgba(255,180,60,.15);
-  position: relative;
+  text-shadow: 0 3px 10px rgba(0,0,0,.5), 0 1px 0 rgba(0,0,0,.6);
+  position: relative; z-index: 1;
 }
 .choco-unit {
   font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: .25em;
+  font-size: 10px;
+  letter-spacing: .3em;
   text-transform: uppercase;
   color: rgba(255,210,130,.55);
   margin-top: 5px;
-  position: relative;
+  position: relative; z-index: 1;
 }
 .choco-lbl {
-  font-family: var(--sans);
   font-size: 12.5px;
   color: rgba(255,210,130,.7);
-  margin-top: 9px;
+  margin-top: 10px;
   font-weight: 400;
   line-height: 1.35;
-  position: relative;
+  position: relative; z-index: 1;
 }
+
+/* Embossed brand name */
+.choco-emboss {
+  position: absolute;
+  bottom: 20px; right: 28px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  color: rgba(0,0,0,.25);
+  letter-spacing: .12em;
+  pointer-events: none;
+  z-index: 1;
+  user-select: none;
+}
+
+/* ====================================================
+   MORDIDA (BITE) — top-right corner
+   ==================================================== */
+.choco-bite {
+  position: absolute;
+  top: -38px;
+  right: -38px;
+  width: 145px;
+  height: 145px;
+  border-radius: 50%;
+  /* matches the cream page background */
+  background: #F7F1E8;
+  /* also replicate the dot pattern subtly */
+  background-image:
+    radial-gradient(rgba(31,61,142,.025) 1px, transparent 1.5px),
+    radial-gradient(rgba(26,19,24,.018) 1px, transparent 1px);
+  background-size: 24px 24px, 9px 9px;
+  z-index: 20;
+  pointer-events: none;
+}
+/* Exposed chocolate "cut" ring at bite edge */
+.bite-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 6px rgba(92,36,16,.5),
+    inset 0 0 16px rgba(61,20,8,.3);
+}
+
+/* Crumbs near bite */
+.bite-crumbs {
+  position: absolute;
+  top: 14px;
+  right: 88px;
+  z-index: 21;
+  pointer-events: none;
+}
+.bite-crumbs span {
+  display: block;
+  position: absolute;
+  background: #6B3017;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0,0,0,.4);
+}
+.bite-crumbs span:nth-child(1) { width:12px; height:8px;  top:0;   left:0;   transform:rotate(25deg); }
+.bite-crumbs span:nth-child(2) { width:8px;  height:5px;  top:14px;left:20px;transform:rotate(-18deg);}
+.bite-crumbs span:nth-child(3) { width:6px;  height:4px;  top:5px; left:30px;transform:rotate(50deg); }
+.bite-crumbs span:nth-child(4) { width:9px;  height:6px;  top:24px;left:8px; transform:rotate(-35deg);}
+.bite-crumbs span:nth-child(5) { width:5px;  height:5px;  top:18px;left:38px;transform:rotate(12deg); border-radius:50%;}
+
+/* ====================================================
+   DRIPS — chocolate melting down
+   ==================================================== */
+.choco-drips-wrap {
+  position: relative;
+  width: 100%;
+  margin-top: -1px;
+}
+
+.drips-svg {
+  display: block;
+  width: 100%;
+  height: 180px;
+  overflow: visible;
+}
+
+/* Each drip starts collapsed, grows down when .dripping fires */
+.drip {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  transform: scaleY(0);
+  transition: transform 1.4s cubic-bezier(.34, 1.05, .64, 1);
+  transition-delay: var(--dl, 0s);
+}
+.choco-drips-wrap.dripping .drip {
+  transform: scaleY(1);
+}
+
+/* The pool at the bottom */
+.drip-pool {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transform: scaleX(0);
+  transition: transform 1.2s cubic-bezier(.34,1.05,.64,1) .6s;
+}
+.choco-drips-wrap.dripping .drip-pool {
+  transform: scaleX(1);
+}
+
+/* ── Responsive ── */
 @media (max-width: 860px) {
   .choco-grid { grid-template-columns: repeat(2, 1fr); }
   .choco-piece:nth-child(2) { border-right: none; }
-  .choco-piece { border-bottom: 3px solid #2A1208; }
+  .choco-piece { border-bottom: 2px solid rgba(0,0,0,.35); }
   .choco-piece:nth-child(3), .choco-piece:nth-child(4) { border-bottom: none; }
+  .choco-bite { width: 110px; height: 110px; top: -25px; right: -25px; }
 }
 @media (max-width: 480px) {
-  .choco-piece { padding: 26px 14px 28px; }
+  .choco-piece { padding: 26px 12px 28px; }
+  .foil-sub { display: none; }
 }
+
 
 /* ===== Highlight ===== */
 .hl { background: #B5E640; color: var(--ink); padding: 0 6px; margin: 0 -2px; border-radius: 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; font-weight: 600; transition: background .2s ease; }
