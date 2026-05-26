@@ -56,6 +56,9 @@ export default function ChocoBar() {
       {/* ─── BARRA ─── */}
       <div className="choco-bar">
 
+        {/* Overlay para legibilidade */}
+        <div className="choco-overlay" aria-hidden="true" />
+
         {/* Foil embalagem */}
         <div className="choco-foil">
           <span className="foil-brand">Regina Moura</span>

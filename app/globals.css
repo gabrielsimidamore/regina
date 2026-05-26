@@ -248,13 +248,31 @@ section { padding: 120px 32px; position: relative; }
 .choco-bar {
   position: relative;
   border-radius: 18px 18px 0 0;
-  /* Background escuro das ranhuras entre os quadradinhos */
-  background: #1C0904;
+  /* FOTO REAL de chocolate como fundo */
+  background-image: url('/photos/choco-bg2.jpg');
+  background-size: cover;
+  background-position: center 55%;
   box-shadow:
     0 -3px 0 rgba(180,90,40,.15) inset,
     0 28px 70px -20px rgba(30,8,2,.65);
   overflow: visible;
 }
+/* Overlay escuro para legibilidade do texto */
+.choco-bar > .choco-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(
+    180deg,
+    rgba(20,6,2,.82) 0%,
+    rgba(30,10,3,.70) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+/* Todos os filhos acima do overlay */
+.choco-bar > * { position: relative; z-index: 1; }
+.choco-bar > .choco-overlay { z-index: 0; }
 
 /* ─── Foil/embalagem ─── */
 .choco-foil {
@@ -301,7 +319,7 @@ section { padding: 120px 32px; position: relative; }
   grid-template-columns: repeat(4, 1fr);
   gap: 6px;
   padding: 10px 10px 14px;
-  background: #1C0904; /* ranhuras escuras */
+  background: transparent;
   position: relative;
 }
 
@@ -315,18 +333,14 @@ section { padding: 120px 32px; position: relative; }
   cursor: default;
   transition: filter .3s;
 
-  /* ✨ Efeito cúpula de chocolate */
+  /* ✨ Quadradinho semi-transparente sobre a foto */
   background:
-    /* Destaque circular no canto superior esquerdo */
     radial-gradient(ellipse 70% 55% at 32% 26%,
-      rgba(200,115,55,.65) 0%,
-      rgba(160,75,25,.35) 35%,
+      rgba(200,115,55,.25) 0%,
       transparent 65%),
-    /* Sombra embaixo */
     radial-gradient(ellipse 80% 50% at 50% 100%,
-      rgba(0,0,0,.5) 0%, transparent 70%),
-    /* Cor base do chocolate ao leite */
-    linear-gradient(150deg, #8B4520 0%, #6B2E10 40%, #4C1A08 100%);
+      rgba(0,0,0,.35) 0%, transparent 70%),
+    rgba(30, 10, 3, 0.45);
 
   /* Borda interna (brilho no topo, sombra embaixo) */
   box-shadow:
