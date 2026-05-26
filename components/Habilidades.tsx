@@ -9,20 +9,22 @@ const skills = [
 
 export default function Habilidades() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
 
-  const handlePlay = () => {
+  const togglePlay = () => {
     const v = videoRef.current;
     if (!v) return;
-    v.muted = false;
-    v.play().then(() => {
-      setPlaying(true);
-    }).catch(() => {
-      v.muted = true;
-      v.play();
-      setPlaying(true);
-    });
+    if (playing) {
+      v.pause();
+      setPlaying(false);
+    } else {
+      v.muted = false;
+      v.play().then(() => setPlaying(true)).catch(() => {
+        v.muted = true;
+        v.play();
+        setPlaying(true);
+      });
+    }
   };
 
   return (
@@ -37,23 +39,30 @@ export default function Habilidades() {
         </div>
 
         <div className="skills-layout">
-          <div className={`video-card${playing ? ' playing' : ''}`} ref={cardRef}>
-            <video
-              ref={videoRef}
-              muted playsInline loop preload="none"
-              poster="/photos/p19.jpeg"
-            >
+          <div className={`video-card${playing ? ' playing' : ''}`}>
+            <video ref={videoRef} muted playsInline loop preload="none" poster="/photos/p19.jpeg">
               <source src="/media/regina-video.mp4" type="video/mp4" />
             </video>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             {!playing && <img className="poster" src="/photos/p19.jpeg" alt="Regina em ação no PDV" />}
             <div className="grad" />
             <div className="vc-tag"><span className="dot" /> Em ação · PDV</div>
-            {!playing && (
-              <button className="play-btn" onClick={handlePlay} aria-label="Assistir vídeo">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-              </button>
-            )}
+
+            {/* Play / Pause button */}
+            <button className="play-btn" onClick={togglePlay}
+              aria-label={playing ? 'Pausar vídeo' : 'Assistir vídeo'}>
+              {playing ? (
+                /* Pause icon */
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+              ) : (
+                /* Play icon */
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              )}
+            </button>
+
             <div className="caption">
               "Cada cliente que para na minha bancada é uma conversa."
               <span className="sub">Regina M. · Demonstradora &amp; Impulsionadora</span>
